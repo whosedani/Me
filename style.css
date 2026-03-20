@@ -518,7 +518,8 @@ body.flash-sienna .cold-open__bg-overlay {
 
 .filmstrip {
     display: flex;
-    gap: 2px;
+    justify-content: center;
+    gap: 8px;
     padding: 0 40px;
     overflow-x: auto;
     scroll-snap-type: x proximity;
@@ -532,7 +533,7 @@ body.flash-sienna .cold-open__bg-overlay {
 
 .filmstrip__frame {
     flex-shrink: 0;
-    width: 320px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     background: var(--navy);
@@ -575,8 +576,8 @@ body.flash-sienna .cold-open__bg-overlay {
 }
 
 .filmstrip__img {
-    width: 320px;
-    height: 384px;
+    width: 400px;
+    aspect-ratio: 9 / 16;
     overflow: hidden;
 }
 
@@ -877,12 +878,12 @@ body.flash-sienna .cold-open__bg-overlay {
     }
 
     .filmstrip__frame {
-        width: 240px;
+        width: 300px;
     }
 
     .filmstrip__img {
-        width: 240px;
-        height: 300px;
+        width: 300px;
+        aspect-ratio: 9 / 16;
     }
 
     .ticket {
