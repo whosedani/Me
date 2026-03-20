@@ -33,6 +33,15 @@
 
         const buy = document.getElementById('buyLink');
         if (buy && CONFIG.buy) buy.href = CONFIG.buy;
+
+        const heroCa = document.getElementById('heroCa');
+        if (heroCa && CONFIG.ca) {
+            heroCa.textContent = CONFIG.ca;
+            heroCa.addEventListener('click', () => {
+                navigator.clipboard.writeText(CONFIG.ca).catch(() => {});
+                showToast();
+            });
+        }
     }
 
     /* ---- CA COPY + TOAST ---- */
@@ -71,45 +80,19 @@
     const heroTitle = document.getElementById('heroTitle');
 
     function coldOpen() {
-        // Line 1 fade in
-        setTimeout(() => {
-            line1.style.transition = 'opacity 2s ease';
-            line1.style.opacity = '1';
-        }, 1500);
+        // Show hero title immediately with sienna flash
+        document.body.classList.add('flash-sienna');
+        heroTitle.style.opacity = '1';
 
-        // Line 1 fade out
+        // Remove sienna flash after 150ms
         setTimeout(() => {
-            line1.style.transition = 'opacity 0.8s ease';
-            line1.style.opacity = '0';
-        }, 4500);
-
-        // Line 2 fade in
-        setTimeout(() => {
-            line2.style.transition = 'opacity 2s ease';
-            line2.style.opacity = '1';
-        }, 6000);
-
-        // Line 2 fade out
-        setTimeout(() => {
-            line2.style.transition = 'opacity 0.8s ease';
-            line2.style.opacity = '0';
-        }, 9000);
-
-        // Flash + Hero
-        setTimeout(() => {
-            flash.style.transition = 'opacity 0.04s ease';
-            flash.style.opacity = '1';
-            setTimeout(() => {
-                flash.style.transition = 'opacity 0.04s ease';
-                flash.style.opacity = '0';
-            }, 80);
-
-            setTimeout(() => {
-                heroTitle.style.transition = 'opacity 0.8s ease';
-                heroTitle.style.opacity = '1';
-            }, 120);
-        }, 11000);
+            document.body.classList.remove('flash-sienna');
+        }, 150);
     }
+
+    // Hide unused lines
+    if (line1) line1.style.display = 'none';
+    if (line2) line2.style.display = 'none';
 
     coldOpen();
 
@@ -144,22 +127,6 @@
     }, { threshold: 0.2 });
 
     trilogyPanels.forEach(p => trilogyObs.observe(p));
-
-    /* ---- ACT V — STAGGERED REVIEWS ---- */
-    const reviews = document.querySelectorAll('.acclaim-review[data-fade]');
-
-    const reviewObs = new IntersectionObserver((entries) => {
-        entries.forEach((entry, i) => {
-            if (entry.isIntersecting) {
-                const idx = Array.from(reviews).indexOf(entry.target);
-                setTimeout(() => {
-                    entry.target.classList.add('visible');
-                }, idx * 200);
-            }
-        });
-    }, { threshold: 0.15 });
-
-    reviews.forEach(r => reviewObs.observe(r));
 
     /* ---- LOAD CONFIG ---- */
     loadConfig();
