@@ -113,30 +113,24 @@
 
     coldOpen();
 
-    /* ---- ACT II — POSTER REVEAL ---- */
-    const posterSection = document.getElementById('actII');
+    /* ---- ACT II — CONCEPT REVEAL ---- */
+    const conceptSection = document.getElementById('actII');
 
-    function handlePoster(entries) {
+    const conceptObs = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const img = posterSection.querySelector('.poster__image img');
-                if (img) img.classList.add('zoomed');
-
-                const from = posterSection.querySelector('.poster__from');
-                const title = posterSection.querySelector('.poster__title');
-                const sub = posterSection.querySelector('.poster__subtitle');
-                const credits = posterSection.querySelector('.poster__credits');
-
-                if (from) from.classList.add('visible');
+                const title = conceptSection.querySelector('.concept__title');
                 if (title) title.classList.add('visible');
-                if (sub) sub.classList.add('visible');
-                if (credits) credits.classList.add('visible');
+
+                const paragraphs = conceptSection.querySelectorAll('.concept__body p');
+                paragraphs.forEach((p, i) => {
+                    setTimeout(() => p.classList.add('visible'), (i + 1) * 300);
+                });
             }
         });
-    }
+    }, { threshold: 0.3 });
 
-    const posterObs = new IntersectionObserver(handlePoster, { threshold: 0.3 });
-    if (posterSection) posterObs.observe(posterSection);
+    if (conceptSection) conceptObs.observe(conceptSection);
 
     /* ---- ACT III — TRILOGY CLIP-PATH REVEAL ---- */
     const trilogyPanels = document.querySelectorAll('.trilogy__panel[data-reveal]');
