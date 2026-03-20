@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ME — March 2025</title>
+    <meta name="description" content="Everyone wants to be the main character. ME — a true story about everyone.">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Crimson+Pro:ital,wght@1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NOISE + FILM GRAIN -->
+    <svg class="noise-overlay" width="100%" height="100%">
+        <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+        </filter>
+        <rect width="100%" height="100%" filter="url(#noise)"/>
+    </svg>
+    <div class="film-grain"></div>
+
+    <!-- LETTERBOX BARS -->
+    <div class="letterbox letterbox--top"></div>
+    <div class="letterbox letterbox--bottom"></div>
+
+    <!-- FLOATING PILL NAV -->
+    <nav class="pill-nav" id="pillNav">
+        <button class="pill-nav__item pill-nav__ca" id="caBtn" data-ca="">
+            <span class="pill-nav__label">CA</span>
+        </button>
+        <a class="pill-nav__item" id="twitterLink" href="#" target="_blank" rel="noopener">
+            <span class="pill-nav__label">Twitter</span>
+        </a>
+        <a class="pill-nav__item" id="communityLink" href="#" target="_blank" rel="noopener">
+            <span class="pill-nav__label">Community</span>
+        </a>
+    </nav>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast">you're in the credits now.</div>
+
+    <!-- ACT I — COLD OPEN -->
+    <section class="act act-i" id="actI">
+        <div class="cold-open">
+            <p class="cold-open__line" id="line1">JANUARY: PENGUIN.</p>
+            <p class="cold-open__line" id="line2">FEBRUARY: PUNCH.</p>
+            <div class="cold-open__flash" id="flash"></div>
+            <div class="cold-open__hero" id="heroTitle">
+                <h1 class="cold-open__title">MARCH: ME.</h1>
+                <p class="cold-open__tagline">everyone wants to be the main character.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACT II — THE POSTER -->
+    <section class="act act-ii" id="actII">
+        <div class="poster">
+            <div class="poster__image">
+                <img src="static/hero.png" alt="ME — The Main Character">
+            </div>
+            <div class="poster__overlay"></div>
+            <div class="poster__content">
+                <p class="poster__from">FROM THE INTERNET THAT BROUGHT YOU PENGUIN AND PUNCH</p>
+                <h2 class="poster__title">ME</h2>
+                <p class="poster__subtitle">a true story about everyone.</p>
+            </div>
+            <p class="poster__credits">DIRECTED BY THE INTERNET &bull; STARRING YOU &bull; MARCH 2025 &bull; ON-CHAIN</p>
+        </div>
+    </section>
+
+    <!-- ACT III — THE TRILOGY -->
+    <section class="act act-iii" id="actIII">
+        <div class="trilogy">
+            <div class="trilogy__panel" data-reveal>
+                <div class="trilogy__image">
+                    <img src="static/january.png" alt="Chapter I — Penguin">
+                </div>
+                <div class="trilogy__overlay"></div>
+                <div class="trilogy__text trilogy__text--left">
+                    <span class="trilogy__chapter">CHAPTER I</span>
+                    <h3 class="trilogy__name">PENGUIN</h3>
+                    <p class="trilogy__quote">he walked alone. the world watched.</p>
+                </div>
+            </div>
+
+            <div class="trilogy__divider"></div>
+
+            <div class="trilogy__panel" data-reveal>
+                <div class="trilogy__image">
+                    <img src="static/february.png" alt="Chapter II — Punch">
+                </div>
+                <div class="trilogy__overlay"></div>
+                <div class="trilogy__text trilogy__text--right">
+                    <span class="trilogy__chapter">CHAPTER II</span>
+                    <h3 class="trilogy__name">PUNCH</h3>
+                    <p class="trilogy__quote">he didn't ask for this. neither did we.</p>
+                </div>
+            </div>
+
+            <div class="trilogy__divider"></div>
+
+            <div class="trilogy__panel trilogy__panel--hero" data-reveal>
+                <div class="trilogy__image">
+                    <img src="static/march.png" alt="Chapter III — ME">
+                </div>
+                <div class="trilogy__overlay trilogy__overlay--light"></div>
+                <div class="trilogy__text trilogy__text--center">
+                    <span class="trilogy__chapter">CHAPTER III</span>
+                    <h3 class="trilogy__name trilogy__name--large">ME.</h3>
+                    <p class="trilogy__quote">this one is about you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACT IV — NOW SHOWING (GALLERY) -->
+    <section class="act act-iv" id="actIV">
+        <div class="gallery-header">
+            <h2 class="gallery-header__title">NOW SHOWING</h2>
+            <p class="gallery-header__subtitle">stills from the main character's life.</p>
+        </div>
+        <div class="filmstrip-wrapper">
+            <div class="filmstrip-fade filmstrip-fade--left"></div>
+            <div class="filmstrip-fade filmstrip-fade--right"></div>
+            <div class="filmstrip" id="filmstrip">
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/1.png" alt="Still 1"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/2.png" alt="Still 2"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/3.png" alt="Still 3"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/4.png" alt="Still 4"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/5.png" alt="Still 5"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/6.png" alt="Still 6"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/7.png" alt="Still 7"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/8.png" alt="Still 8"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/9.png" alt="Still 9"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/10.png" alt="Still 10"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/11.png" alt="Still 11"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+                <div class="filmstrip__frame"><div class="filmstrip__perf filmstrip__perf--top"></div><div class="filmstrip__img"><img src="static/gallery/12.png" alt="Still 12"></div><div class="filmstrip__perf filmstrip__perf--bottom"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACT V — CRITICAL ACCLAIM -->
+    <section class="act act-v" id="actV">
+        <h2 class="acclaim-title">CRITICAL ACCLAIM</h2>
+        <div class="acclaim-reviews">
+            <div class="acclaim-review" data-fade>
+                <p class="acclaim-review__quote">"This is too good not to go."</p>
+                <span class="acclaim-review__source">— The Internet, <span class="acclaim-stars">★★★★★</span></span>
+            </div>
+            <div class="acclaim-divider"></div>
+            <div class="acclaim-review" data-fade>
+                <p class="acclaim-review__quote">"Penguin walked so ME could run."</p>
+                <span class="acclaim-review__source">— Reddit, probably</span>
+            </div>
+            <div class="acclaim-divider"></div>
+            <div class="acclaim-review" data-fade>
+                <p class="acclaim-review__quote">"I don't know what this is but I'm in."</p>
+                <span class="acclaim-review__source">— every degen ever</span>
+            </div>
+            <div class="acclaim-divider"></div>
+            <div class="acclaim-review" data-fade>
+                <p class="acclaim-review__quote">"The best memecoin narrative since Penguin."</p>
+                <span class="acclaim-review__source">— CT, March 2025</span>
+            </div>
+            <div class="acclaim-divider"></div>
+            <div class="acclaim-review" data-fade>
+                <p class="acclaim-review__quote">"He's literally me."</p>
+                <span class="acclaim-review__source">— you, right now</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ACT VI — GET YOUR TICKET -->
+    <section class="act act-vi" id="actVI">
+        <div class="ticket" id="ticket">
+            <div class="ticket__main">
+                <h2 class="ticket__title">$ME</h2>
+                <p class="ticket__admit">admit one main character</p>
+                <div class="ticket__steps">
+                    <p class="ticket__step"><span class="ticket__screen">SCREEN 1</span> Download Phantom</p>
+                    <p class="ticket__step"><span class="ticket__screen">SCREEN 2</span> Buy SOL</p>
+                    <p class="ticket__step"><span class="ticket__screen">SCREEN 3</span> <span>Swap for $ME on <a class="ticket__link" id="buyLink" href="#" target="_blank" rel="noopener">pump.fun</a></span></p>
+                    <p class="ticket__step"><span class="ticket__screen">SCREEN 4</span> You're the main character now</p>
+                </div>
+            </div>
+            <div class="ticket__tear"></div>
+            <div class="ticket__stub">
+                <span class="ticket__stub-label">STUB</span>
+                <span class="ticket__stub-ticker">$ME</span>
+                <span class="ticket__stub-date">MARCH 2025</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- END CREDITS -->
+    <footer class="end-credits" id="endCredits">
+        <div class="credits-scroll">
+            <div class="credits-content">
+                <p class="credits-title">ME</p>
+                <br>
+                <p>directed by the internet</p>
+                <p>starring you</p>
+                <p>produced by the timeline</p>
+                <p>distributed on-chain</p>
+                <br><br>
+                <p>january: penguin</p>
+                <p>february: punch</p>
+                <p>march: me</p>
+                <br><br>
+                <p class="credits-final">"it's all about me."</p>
+                <br><br>
+                <p class="credits-year">2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

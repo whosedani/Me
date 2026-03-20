@@ -1,0 +1,941 @@
+/* ============================================
+   ME — CINEMATIC SITE
+   Palette: navy #0A0E1A, sienna #C4653A,
+           off-white #E2E4EA, muted #6B7084
+   ============================================ */
+
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navy: #0A0E1A;
+    --sienna: #C4653A;
+    --off-white: #E2E4EA;
+    --muted: #6B7084;
+    --bar-h: 60px;
+    --navy-light: #161B2E;
+}
+
+html {
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted) var(--navy);
+}
+
+body {
+    background: var(--navy);
+    color: var(--off-white);
+    font-family: 'IBM Plex Mono', monospace;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ---- NOISE OVERLAY ---- */
+.noise-overlay {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.025;
+    pointer-events: none;
+    z-index: 9998;
+}
+
+/* ---- FILM GRAIN ---- */
+.film-grain {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.03;
+    pointer-events: none;
+    z-index: 9997;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    background-size: 128px 128px;
+    animation: grain 0.1s steps(1) infinite;
+}
+
+@keyframes grain {
+    0%   { background-position: 0 0; }
+    20%  { background-position: -30px 20px; }
+    40%  { background-position: 50px -10px; }
+    60%  { background-position: -20px 40px; }
+    80%  { background-position: 40px -30px; }
+    100% { background-position: 10px 10px; }
+}
+
+/* ---- LETTERBOX BARS ---- */
+.letterbox {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: var(--bar-h);
+    background: rgba(6, 8, 14, 0.95);
+    z-index: 100;
+    pointer-events: none;
+}
+
+.letterbox--top {
+    top: 0;
+}
+
+.letterbox--bottom {
+    bottom: 0;
+    animation: pulseBar 3s ease-in-out infinite;
+}
+
+@keyframes pulseBar {
+    0%, 100% { opacity: 0.95; }
+    50%      { opacity: 0.7; }
+}
+
+/* ---- FLOATING PILL NAV ---- */
+.pill-nav {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 200;
+    display: flex;
+    gap: 0;
+    background: rgba(10, 14, 26, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 100px;
+    padding: 6px 8px;
+    opacity: 0.4;
+    transition: opacity 0.4s ease;
+}
+
+.pill-nav:hover {
+    opacity: 1;
+}
+
+.pill-nav__item {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 6px 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+}
+
+.pill-nav__item:hover {
+    color: var(--off-white);
+}
+
+.pill-nav__ca {
+    color: var(--sienna);
+}
+
+.pill-nav__ca:hover {
+    color: var(--off-white);
+}
+
+/* ---- TOAST ---- */
+.toast {
+    position: fixed;
+    bottom: calc(var(--bar-h) + 20px);
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: rgba(10, 14, 26, 0.9);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(196, 101, 58, 0.3);
+    color: var(--sienna);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    opacity: 0;
+    pointer-events: none;
+    z-index: 300;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* ---- ACT SECTIONS ---- */
+.act {
+    position: relative;
+    width: 100%;
+}
+
+/* ---- ACT I — COLD OPEN ---- */
+.act-i {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy);
+}
+
+.cold-open {
+    text-align: center;
+    position: relative;
+}
+
+.cold-open__line {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 4px;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap;
+}
+
+.cold-open__flash {
+    position: fixed;
+    inset: 0;
+    background: var(--sienna);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 500;
+}
+
+.cold-open__hero {
+    opacity: 0;
+}
+
+.cold-open__title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(80px, 18vw, 240px);
+    letter-spacing: 16px;
+    color: var(--off-white);
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+.cold-open__tagline {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--sienna);
+    margin-top: 16px;
+}
+
+/* ---- ACT II — THE POSTER ---- */
+.act-ii {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+.poster {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.poster__image {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.poster__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.1);
+    transition: transform 3s ease-out;
+}
+
+.poster__image img.zoomed {
+    transform: scale(1.0);
+}
+
+.poster__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(10, 14, 26, 0.7) 0%,
+        rgba(10, 14, 26, 0.4) 40%,
+        rgba(10, 14, 26, 0.85) 100%
+    );
+    z-index: 1;
+}
+
+.poster__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.poster__from {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.poster__from.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.poster__title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(100px, 22vw, 300px);
+    letter-spacing: 20px;
+    color: var(--off-white);
+    text-transform: uppercase;
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease 0.2s, transform 0.8s ease 0.2s;
+}
+
+.poster__title.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.poster__subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--sienna);
+    margin-top: 16px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s ease 0.4s, transform 0.8s ease 0.4s;
+}
+
+.poster__subtitle.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.poster__credits {
+    position: absolute;
+    bottom: calc(var(--bar-h) + 8px);
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    z-index: 2;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.6s;
+}
+
+.poster__credits.visible {
+    opacity: 1;
+}
+
+/* ---- ACT III — THE TRILOGY ---- */
+.act-iii {
+    background: var(--navy);
+}
+
+.trilogy {
+    display: flex;
+    flex-direction: column;
+}
+
+.trilogy__divider {
+    height: 4px;
+    background: var(--navy);
+}
+
+.trilogy__panel {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2.39 / 1;
+    overflow: hidden;
+}
+
+.trilogy__panel--hero {
+    border: 1px solid rgba(196, 101, 58, 0.5);
+}
+
+.trilogy__image {
+    position: absolute;
+    inset: 0;
+}
+
+.trilogy__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: inset(0 50%);
+    transition: clip-path 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.trilogy__panel.revealed .trilogy__image img {
+    clip-path: inset(0 0);
+}
+
+.trilogy__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 14, 26, 0.55);
+    z-index: 1;
+}
+
+.trilogy__overlay--light {
+    background: rgba(10, 14, 26, 0.35);
+}
+
+.trilogy__text {
+    position: absolute;
+    z-index: 2;
+    padding: 40px;
+    opacity: 0;
+    transition: opacity 0.8s ease 0.6s;
+}
+
+.trilogy__panel.revealed .trilogy__text {
+    opacity: 1;
+}
+
+.trilogy__text--left {
+    bottom: 0;
+    left: 0;
+}
+
+.trilogy__text--right {
+    bottom: 0;
+    right: 0;
+    text-align: right;
+}
+
+.trilogy__text--center {
+    bottom: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    text-align: center;
+}
+
+.trilogy__chapter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.trilogy__name {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 48px;
+    color: var(--off-white);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.trilogy__name--large {
+    font-weight: 800;
+    font-size: 72px;
+    letter-spacing: 8px;
+}
+
+.trilogy__quote {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--muted);
+    margin-top: 8px;
+}
+
+/* ---- ACT IV — NOW SHOWING ---- */
+.act-iv {
+    padding: 120px 0 80px;
+    background: var(--navy);
+}
+
+.gallery-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.gallery-header__title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(36px, 6vw, 72px);
+    color: var(--off-white);
+    text-transform: uppercase;
+    letter-spacing: 8px;
+}
+
+.gallery-header__subtitle {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--muted);
+    margin-top: 12px;
+}
+
+.filmstrip-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.filmstrip-fade {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.filmstrip-fade--left {
+    left: 0;
+    background: linear-gradient(to right, var(--navy), transparent);
+}
+
+.filmstrip-fade--right {
+    right: 0;
+    background: linear-gradient(to left, var(--navy), transparent);
+}
+
+.filmstrip {
+    display: flex;
+    gap: 2px;
+    padding: 0 40px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.filmstrip::-webkit-scrollbar {
+    display: none;
+}
+
+.filmstrip__frame {
+    flex-shrink: 0;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    background: var(--navy);
+    scroll-snap-align: start;
+    cursor: pointer;
+}
+
+.filmstrip__perf {
+    height: 18px;
+    background: var(--navy-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0 8px;
+    transition: background 0.3s ease;
+}
+
+.filmstrip__perf::before {
+    content: '';
+    display: flex;
+    width: 100%;
+    height: 10px;
+    background: repeating-linear-gradient(
+        to right,
+        var(--navy) 0px,
+        var(--navy) 12px,
+        var(--navy-light) 12px,
+        var(--navy-light) 16px
+    );
+    /* Simulating sprocket holes */
+    background-image: repeating-linear-gradient(
+        to right,
+        transparent 0px,
+        transparent 6px,
+        var(--navy) 6px,
+        var(--navy) 18px,
+        transparent 18px,
+        transparent 24px
+    );
+}
+
+.filmstrip__img {
+    width: 320px;
+    height: 384px;
+    overflow: hidden;
+}
+
+.filmstrip__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+}
+
+.filmstrip__frame:hover .filmstrip__img img {
+    filter: sepia(0.12) brightness(1.08);
+}
+
+.filmstrip__frame:hover .filmstrip__perf {
+    background: var(--sienna);
+}
+
+/* ---- ACT V — CRITICAL ACCLAIM ---- */
+.act-v {
+    padding: 120px 20px;
+    background: var(--navy);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.acclaim-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: clamp(28px, 5vw, 48px);
+    color: var(--off-white);
+    text-transform: uppercase;
+    letter-spacing: 8px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.acclaim-reviews {
+    display: flex;
+    flex-direction: column;
+}
+
+.acclaim-review {
+    text-align: center;
+    padding: 32px 0;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.acclaim-review.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.acclaim-review__quote {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: clamp(18px, 3vw, 24px);
+    color: var(--off-white);
+    line-height: 1.5;
+    margin-bottom: 12px;
+}
+
+.acclaim-review__source {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 1px;
+}
+
+.acclaim-stars {
+    color: var(--sienna);
+}
+
+.acclaim-divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* ---- ACT VI — GET YOUR TICKET ---- */
+.act-vi {
+    padding: 120px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--navy);
+    min-height: 80vh;
+}
+
+.ticket {
+    display: flex;
+    background: rgba(22, 27, 46, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    max-width: 680px;
+    width: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.ticket:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 40px rgba(196, 101, 58, 0.15);
+    border-color: rgba(196, 101, 58, 0.4);
+}
+
+.ticket__main {
+    flex: 1;
+    padding: 40px;
+}
+
+.ticket__title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: var(--off-white);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.ticket__admit {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--sienna);
+    margin-top: 4px;
+    margin-bottom: 32px;
+}
+
+.ticket__steps {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.ticket__step {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--off-white);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ticket__screen {
+    color: var(--muted);
+    font-size: 10px;
+    letter-spacing: 2px;
+    min-width: 72px;
+}
+
+.ticket__link {
+    color: var(--sienna);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.ticket__link:hover {
+    color: var(--off-white);
+}
+
+.ticket__tear {
+    width: 2px;
+    border-right: 2px dashed rgba(255, 255, 255, 0.2);
+    margin: 20px 0;
+}
+
+.ticket__stub {
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 10px;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    gap: 20px;
+}
+
+.ticket__stub-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--muted);
+}
+
+.ticket__stub-ticker {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--off-white);
+    letter-spacing: 3px;
+}
+
+.ticket__stub-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: var(--muted);
+}
+
+/* ---- END CREDITS ---- */
+.end-credits {
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.credits-scroll {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
+.credits-content {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    animation: scrollCredits 20s linear infinite;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    line-height: 2.2;
+}
+
+.credits-title {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 48px;
+    color: var(--off-white);
+    letter-spacing: 12px;
+}
+
+.credits-final {
+    font-family: 'Crimson Pro', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--sienna);
+}
+
+.credits-year {
+    font-size: 14px;
+    color: var(--off-white);
+    letter-spacing: 8px;
+}
+
+@keyframes scrollCredits {
+    0%   { top: 100%; }
+    100% { top: -100%; }
+}
+
+/* ---- RESPONSIVE ---- */
+@media (max-width: 768px) {
+    :root {
+        --bar-h: 40px;
+    }
+
+    .pill-nav {
+        top: auto;
+        bottom: calc(var(--bar-h) + 12px);
+        right: 12px;
+        padding: 4px 6px;
+    }
+
+    .pill-nav__item {
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+
+    .cold-open__title {
+        letter-spacing: 8px;
+    }
+
+    .poster__from {
+        font-size: 9px;
+        letter-spacing: 3px;
+        padding: 0 20px;
+    }
+
+    .poster__credits {
+        font-size: 8px;
+        letter-spacing: 2px;
+    }
+
+    .trilogy__name {
+        font-size: 32px;
+    }
+
+    .trilogy__name--large {
+        font-size: 48px;
+    }
+
+    .trilogy__text {
+        padding: 20px;
+    }
+
+    .trilogy__panel {
+        aspect-ratio: 16 / 9;
+    }
+
+    .filmstrip__frame {
+        width: 240px;
+    }
+
+    .filmstrip__img {
+        width: 240px;
+        height: 300px;
+    }
+
+    .ticket {
+        flex-direction: column;
+    }
+
+    .ticket__tear {
+        width: auto;
+        height: 2px;
+        margin: 0 20px;
+        border-right: none;
+        border-bottom: 2px dashed rgba(255, 255, 255, 0.2);
+    }
+
+    .ticket__stub {
+        width: auto;
+        height: auto;
+        writing-mode: horizontal-tb;
+        flex-direction: row;
+        padding: 16px 40px;
+    }
+
+    .ticket__main {
+        padding: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cold-open__title {
+        letter-spacing: 4px;
+    }
+
+    .trilogy__name {
+        font-size: 24px;
+    }
+
+    .trilogy__name--large {
+        font-size: 36px;
+    }
+
+    .acclaim-review {
+        padding: 24px 0;
+    }
+}

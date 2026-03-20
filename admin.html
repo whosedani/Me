@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ME — Admin</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0A0E1A;
+            color: #E2E4EA;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .admin {
+            background: rgba(22, 27, 46, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 40px;
+            max-width: 480px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 18px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 32px;
+            color: #C4653A;
+        }
+        label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #6B7084;
+            margin-bottom: 6px;
+            margin-top: 20px;
+        }
+        label:first-of-type { margin-top: 0; }
+        input {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(10, 14, 26, 0.6);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 6px;
+            color: #E2E4EA;
+            font-size: 14px;
+            font-family: monospace;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        input:focus { border-color: rgba(196, 101, 58, 0.5); }
+        input[type="password"] { letter-spacing: 2px; }
+        button {
+            margin-top: 28px;
+            width: 100%;
+            padding: 12px;
+            background: #C4653A;
+            border: none;
+            border-radius: 6px;
+            color: #E2E4EA;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        button:hover { opacity: 0.85; }
+        .msg {
+            margin-top: 16px;
+            font-size: 13px;
+            text-align: center;
+            min-height: 20px;
+        }
+        .msg.ok { color: #5cb85c; }
+        .msg.err { color: #C4653A; }
+    </style>
+</head>
+<body>
+    <div class="admin">
+        <h1>ME — Admin</h1>
+
+        <label>Password</label>
+        <input type="password" id="pw" placeholder="Enter admin password">
+
+        <label>Contract Address (CA)</label>
+        <input type="text" id="ca" placeholder="Token contract address">
+
+        <label>Twitter URL</label>
+        <input type="text" id="twitter" placeholder="https://x.com/...">
+
+        <label>Community URL</label>
+        <input type="text" id="community" placeholder="https://t.me/...">
+
+        <label>Buy URL</label>
+        <input type="text" id="buy" placeholder="https://pump.fun/...">
+
+        <button id="saveBtn">Save Config</button>
+        <p class="msg" id="msg"></p>
+    </div>
+
+    <script>
+        const $ = id => document.getElementById(id);
+
+        // Load current config
+        (async () => {
+            try {
+                const r = await fetch('/api/config');
+                if (!r.ok) return;
+                const d = await r.json();
+                if (d.ca) $('ca').value = d.ca;
+                if (d.twitter) $('twitter').value = d.twitter;
+                if (d.community) $('community').value = d.community;
+                if (d.buy) $('buy').value = d.buy;
+            } catch (_) {}
+        })();
+
+        $('saveBtn').addEventListener('click', async () => {
+            const pw = $('pw').value;
+            if (!pw) {
+                showMsg('Password required', true);
+                return;
+            }
+
+            const hashBuf = await crypto.subtle.digest('SHA-256',
+                new TextEncoder().encode(pw));
+            const hash = Array.from(new Uint8Array(hashBuf))
+                .map(b => b.toString(16).padStart(2, '0')).join('');
+
+            try {
+                const r = await fetch('/api/config', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        hash,
+                        ca: $('ca').value,
+                        twitter: $('twitter').value,
+                        community: $('community').value,
+                        buy: $('buy').value,
+                    })
+                });
+                const d = await r.json();
+                if (r.ok) {
+                    showMsg('Config saved.', false);
+                } else {
+                    showMsg(d.error || 'Error', true);
+                }
+            } catch (e) {
+                showMsg('Network error', true);
+            }
+        });
+
+        function showMsg(txt, isErr) {
+            const el = $('msg');
+            el.textContent = txt;
+            el.className = 'msg ' + (isErr ? 'err' : 'ok');
+        }
+    </script>
+</body>
+</html>
