@@ -269,8 +269,8 @@ body {
 
 .cold-open__ca {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 1px;
+    font-size: 15px;
+    letter-spacing: 2px;
     color: var(--muted);
     margin-top: 20px;
     word-break: break-all;
