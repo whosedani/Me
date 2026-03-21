@@ -27,7 +27,7 @@ async function kvSet(obj) {
             Authorization: `Bearer ${KV_TOKEN}`,
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(JSON.stringify(obj)),
+        body: JSON.stringify(obj),
     });
 }
 
