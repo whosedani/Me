@@ -7,7 +7,7 @@ const KV_TOKEN = process.env.KV_REST_API_TOKEN;
 const ADMIN_HASH = process.env.ADMIN_HASH;
 
 const FIELDS = ['ca', 'twitter', 'community', 'buy'];
-const KEY = 'me:config';
+const KEY = 'me-site:config';
 
 async function kvGet() {
     const r = await fetch(`${KV_URL}/get/${KEY}`, {
